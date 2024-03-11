@@ -237,7 +237,7 @@ def visualize(canvas, count, current_Node, back_track_node, all_node, vis_i, vis
     canvas_i = canvas.astype(np.uint8)
     back_track_node.reverse()
     fourcc = cv2.VideoWriter_fourcc(*'mp4v')
-    out = cv2.VideoWriter('path_visualization.mp4', fourcc, 20.0, (1200, 500))
+    out = cv2.VideoWriter('output.mp4', fourcc, 20.0, (1200, 500))
     for i in all_node:
         cv2.circle(canvas_i, (i[0],500-i[1]), 0, (255,0,0))
         vis_i+=1
