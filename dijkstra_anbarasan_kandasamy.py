@@ -25,11 +25,16 @@ goal_y = int(input("Enter goal y coord: "))
 start = (start_x,goal_y)
 end = (goal_x,goal_y)
 
-# cheking if the node is in obstacle
+
+# checking if the node is in obstacle
+a = True
 if canvas[500-start[1], start[0]][2] !=np.inf:
     print("please enter new start value")
+    a = False
 if canvas[500-end[1], end[0]][2] !=np.inf:
     print("please enter new end value")
+    a = False
+
 # print([500-end[1],end[0]])
 # print(canvas[500-end[1],end[0]][2])
 
@@ -230,7 +235,7 @@ def back_tracking(q_closed, canvas, count, close_heap_dict):
             node_state = q_closed[index]
             node = node_state[1][1]
             back_track_node.append(node)
-        (print("bt_finished"))
+        print("bt_finished")
         return canvas
 # function to visualize
 def visualize(canvas, count, current_Node, back_track_node, all_node, vis_i, vis_j):
@@ -249,10 +254,12 @@ def visualize(canvas, count, current_Node, back_track_node, all_node, vis_i, vis
         vis_j+=1
         if vis_j%10 == 0:
             out.write(canvas_i)
+    cv2.circle(canvas_i, (end[0],500-end[1]), 4, (255,255,0), -1)
+    cv2.circle(canvas_i, (start[0],500-start[1]), 4, (255,255,0), -1)
+    out.write(canvas_i)
     for i in range(50):
         out.write(canvas_i)
-    cv2.circle(canvas, (end[0],500-end[1]), 4, (255,255,0), -1)
-    cv2.circle(canvas, (start[0],500-start[1]), 4, (255,255,0), -1)
+    
     out.release()
     # cv2.imshow('canva', canvas_i)
     # cv2.waitKey(0)
@@ -262,7 +269,7 @@ def visualize(canvas, count, current_Node, back_track_node, all_node, vis_i, vis
 dict_i = 0
 vis_i = 0
 vis_j = 0
-while True:
+while a:
     count+=1
     current = heapq.heappop(q_open)
     current_Cost = current[0]
