@@ -13,18 +13,27 @@ cv2.fillPoly(canvas,[hex], color=(0,0,255))
 c_shape = np.array([[895,45],[1105,45],[1105,455],[895,455],[895,370],[1015,370],[1015,130],[895,130]])
 c_shape = c_shape.reshape(-1,1,2)
 cv2.fillPoly(canvas,[c_shape], color=(0,0,255))
+
+# getting user input
 count = 0
-start = (8,8)
-end = (1194,340)
+# start = (8,8)
+# end = (1194,340)
+start_x = int(input("Enter start x coord: "))
+start_y = int(input("Enter start y coord: "))
+goal_x = int(input("Enter goal x coord: "))
+goal_y = int(input("Enter goal y coord: "))
+start = (start_x,goal_y)
+end = (goal_x,goal_y)
+
+# cheking if the node is in obstacle
 if canvas[500-start[1], start[0]][2] !=np.inf:
     print("please enter new start value")
 if canvas[500-end[1], end[0]][2] !=np.inf:
     print("please enter new end value")
-print([500-end[1],end[0]])
-print(canvas[500-end[1],end[0]][2])
+# print([500-end[1],end[0]])
+# print(canvas[500-end[1],end[0]][2])
 
-
-
+# declaring variables and data structs
 current_state = (start, start)
 q_open = []
 q_closed = []
@@ -33,7 +42,7 @@ all_node = []
 back_track_node = []
 heapq.heapify(q_open)
 heapq.heappush(q_open, (0, current_state))
-
+# function to move up
 def up(q_closed, q_open, canvas, close_heap_dict):
     open_heap_dict = {pair[1][0]: index for index, pair in enumerate(q_open)}
     current_cost = q_closed[-1][0]
@@ -55,6 +64,7 @@ def up(q_closed, q_open, canvas, close_heap_dict):
                 heapq.heappush(q_open, (current_cost, current_state))    
                 # print("up")     
     return q_open, canvas
+# function to move down
 def down(q_closed, q_open, canvas, close_heap_dict):
     open_heap_dict = {pair[1][0]: index for index, pair in enumerate(q_open)}
     current_cost = q_closed[-1][0]
@@ -76,6 +86,7 @@ def down(q_closed, q_open, canvas, close_heap_dict):
                 heapq.heappush(q_open, (current_cost, current_state)) 
                 # print("down")
     return q_open, canvas
+# function to move left
 def left(q_closed, q_open, canvas, close_heap_dict):
     open_heap_dict = {pair[1][0]: index for index, pair in enumerate(q_open)}
     current_cost = q_closed[-1][0]
@@ -97,6 +108,7 @@ def left(q_closed, q_open, canvas, close_heap_dict):
                 heapq.heappush(q_open, (current_cost, current_state)) 
                 # print("left")
     return q_open, canvas
+# function to move right
 def right(q_closed, q_open, canvas, close_heap_dict):
     open_heap_dict = {pair[1][0]: index for index, pair in enumerate(q_open)}
     current_cost = q_closed[-1][0]
@@ -118,6 +130,7 @@ def right(q_closed, q_open, canvas, close_heap_dict):
                 heapq.heappush(q_open, (current_cost, current_state)) 
                 # print("right")
     return q_open, canvas
+# function to up_left 
 def up_left(q_closed, q_open, canvas, close_heap_dict):
     open_heap_dict = {pair[1][0]: index for index, pair in enumerate(q_open)}
     current_cost = q_closed[-1][0]
@@ -139,6 +152,7 @@ def up_left(q_closed, q_open, canvas, close_heap_dict):
                 heapq.heappush(q_open, (current_cost, current_state))
                 # print("up_left") 
     return q_open, canvas
+# function to move up_right
 def up_right(q_closed, q_open, canvas, close_heap_dict):
     open_heap_dict = {pair[1][0]: index for index, pair in enumerate(q_open)}
     current_cost = q_closed[-1][0]
@@ -160,6 +174,7 @@ def up_right(q_closed, q_open, canvas, close_heap_dict):
                 heapq.heappush(q_open, (current_cost, current_state)) 
                 # print("up_right")
     return q_open, canvas
+# function to move down_left
 def down_left(q_closed, q_open, canvas, close_heap_dict):
     open_heap_dict = {pair[1][0]: index for index, pair in enumerate(q_open)}
     current_cost = q_closed[-1][0]
@@ -181,6 +196,7 @@ def down_left(q_closed, q_open, canvas, close_heap_dict):
                 heapq.heappush(q_open, (current_cost, current_state)) 
                 # print("down_left")
     return q_open, canvas
+# function to move down_right
 def down_right(q_closed, q_open, canvas, close_heap_dict):
     open_heap_dict = {pair[1][0]: index for index, pair in enumerate(q_open)}
     current_cost = q_closed[-1][0]
@@ -201,6 +217,7 @@ def down_right(q_closed, q_open, canvas, close_heap_dict):
             else:
                 heapq.heappush(q_open, (current_cost, current_state)) 
     return q_open, canvas
+# function for back tracking
 def back_tracking(q_closed, canvas, count, close_heap_dict):
     if q_closed[-1][1][0] == end:
         node_state = q_closed[-1]
@@ -215,6 +232,7 @@ def back_tracking(q_closed, canvas, count, close_heap_dict):
             back_track_node.append(node)
         (print("bt_finished"))
         return canvas
+# function to visualize
 def visualize(canvas, count, current_Node, back_track_node, all_node, vis_i, vis_j):
     canvas_i = canvas.astype(np.uint8)
     back_track_node.reverse()
@@ -239,7 +257,8 @@ def visualize(canvas, count, current_Node, back_track_node, all_node, vis_i, vis
     # cv2.imshow('canva', canvas_i)
     # cv2.waitKey(0)
     cv2.destroyAllWindows()
-    
+
+# while loop for itteration
 dict_i = 0
 vis_i = 0
 vis_j = 0
@@ -249,11 +268,11 @@ while True:
     current_Cost = current[0]
     current_Node = current[1][0]
     # print(current_Node)
-    if len(q_open) != 0 or count == 1:
+    if len(q_open) != 0 or count == 1:# checking the open list lenght
         q_closed.append(current)
         close_heap_dict[current_Node] = dict_i
         dict_i+=1
-        if current_Node == end:
+        if current_Node == end:# checking for the goal node
             print("solution found")
             canvas = back_tracking(q_closed, canvas, count, close_heap_dict)
             visualize(canvas, count, current_Node, back_track_node, all_node, vis_i, vis_j)
