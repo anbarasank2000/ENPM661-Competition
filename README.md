@@ -1,4 +1,4 @@
 # ENPM661 Competition
 # **Competition Video** 👇
 
-[![Competition Video*](VN20250203_171153.gif)](https://drive.google.com/file/d/11oUb-yu9rtYtOF138qUdOZuVvk0Lw9En/view?usp=sharing)
+[![Competition Video*](https://img.youtube.com/vi/m-B26ImnQ5g/0.jpg)](https://youtu.be/m-B26ImnQ5g)
