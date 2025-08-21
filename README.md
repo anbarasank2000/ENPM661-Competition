@@ -5,7 +5,7 @@
 
 ## Overview
 
-This repository contains a ROS2-based navigation system that enables a robot to traverse a predefined set of waypoints through a maze. Currently, the waypoints are hardcoded, but the system is designed to be extended with a path planning algorithm in the future.
+This repository contains a ROS2-based navigation system that enables a robot to traverse a predefined set of waypoints through a maze. Currently, the waypoints are hardcoded, but the system is designed to be extended with a path planning algorithm.
 
 ## Features
 
